@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="text-align: center;">Recipe</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar animated="true" placeholder="Search For Recepi" inputmode="search" show-clear-button="always"
+      [debounce]="1000" (ionInput)="onSearch($event)"></ion-searchbar>
+    <ion-button slot="end" (click)="goToShoppingList()">
+      <ion-icon name="cart-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-list *ngFor="let recipe of recipes">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="recipe?.recipe?.image"></ion-img>
+        </ion-thumbnail>
+        <ion-label (click)="navigateToRecipeDetail(recipe)">
+          {{ recipe?.recipe?.label }}
+        </ion-label>
+        <ion-icon slot="end" *ngIf="!recepi.isFavorite(recipe)" (click)="recepi.addFavorite(recipe)"
+          name="heart-outline"></ion-icon>
+        <ion-icon slot="end" *ngIf="recepi.isFavorite(recipe)" (click)="recepi.removeFavorite(recipe)"
+          name="heart"></ion-icon>
+      </ion-item>
+    </ion-list>
+    <div *ngIf="favoriteRecipes.length && recipes.length == 0">
+      <ion-row>
+        <ion-col>
+          <h2>Your favorite recipes are...</h2>
+        </ion-col>
+      </ion-row>
+      <ion-list *ngFor="let recipe of favoriteRecipes">
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-img [src]="recipe?.recipe?.image"></ion-img>
+          </ion-thumbnail>
+          <ion-label (click)="navigateToRecipeDetail(recipe)">
+            {{ recipe?.recipe?.label }}
+          </ion-label>
+          <ion-icon slot="end" (click)="removeFavorite(recipe)" name="heart"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-row class="centered-row">
+      <p *ngIf="favoriteRecipes.length == 0">No favorite recipes saved</p>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ recipe?.recipe?.label }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-thumbnail>
+          <ion-img [src]="recipe?.recipe?.image"></ion-img>
+        </ion-thumbnail>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h2>Ingredients</h2>
+        <ion-list>
+          <ion-item *ngFor="let ingredient of recipe?.recipe?.ingredients; let i = index">
+            {{i + 1}}. {{ ingredient?.text }}
+            <ion-button slot="end" (click)="addToShoppingList(ingredient.text)">
+              <ion-icon name="cart-outline"></ion-icon>
+            </ion-button>
+            <ion-button slot="end" (click)="removeFromShoppingList(ingredient.text)">
+              <ion-icon name="remove-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>Cooking time</p>
+        <span>{{recipe?.recipe?.totalTime}} min</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

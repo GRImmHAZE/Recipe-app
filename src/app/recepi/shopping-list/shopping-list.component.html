@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Shopping List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row *ngIf="shoppingListItems.length">
+      <ion-col>
+        <h2>My Shopping List</h2>
+        <ion-list>
+          <ion-item *ngFor="let item of shoppingListItems; let i = index">
+            {{i + 1}}. {{ item }}
+            <ion-button slot="end" (click)="removeFromShoppingList(item)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row class="centered-row" *ngIf="shoppingListItems.length == 0">
+      <p>Add items in shopping list</p>
+    </ion-row>
+  </ion-grid>
+</ion-content>
